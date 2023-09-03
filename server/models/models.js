@@ -1,5 +1,5 @@
 const sequelize = require("./db.js");
-const { DataTypes } = require("sequelize");
+const { DataTypes, REAL } = require("sequelize");
 
 const User = sequelize.define("user", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -43,3 +43,45 @@ const DeviceInfo = sequelize.define("device_info", {
   title: { type: DataTypes.STRING, allowNull: false },
   description: { type: DataTypes.STRING, allowNull: false },
 });
+
+const TypeBrand = sequelize.define("type_brand", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+
+User.hasOne(Basket);
+Basket.belongsTo(User);
+
+User.hasMany(Rating);
+Rating.belongsTo(User);
+
+Basket.hasMany(BasketDevice);
+BasketDevice.belongsTo(Basket);
+
+Type.hasMany(Device);
+Device.belongsTo(Type);
+
+Brand.hasMany(Device);
+Device.belongsTo(Brand);
+
+Device.hasMany(Rating);
+Rating.belongsTo(Device);
+
+Device.hasMany(BasketDevice);
+BasketDevice.belongsTo(Device);
+
+Device.hasMany(DeviceInfo);
+DeviceInfo.belongsTo(Device);
+
+Type.belongsToMany(Brand, { throught: TypeBrand });
+Brand.belongsToMany(Type, { throught: TypeBrand });
+
+module.exports = {
+  User,
+  Basket,
+  BasketDevice,
+  Type,
+  Brand,
+  Rating,
+  TypeBrand,
+  DeviceInfo,
+};
