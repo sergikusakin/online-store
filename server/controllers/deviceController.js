@@ -5,3 +5,5 @@ class DeviceController {
 
   async getOne(req, res) {}
 }
+
+module.exports = new DeviceController();
