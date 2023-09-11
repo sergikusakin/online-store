@@ -19,7 +19,7 @@ const BasketDevice = sequelize.define("basket_device", {
 const Device = sequelize.define("device", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
-  rating: { type: DataTypes.STRING, allowNull: false },
+  rating: { type: DataTypes.STRING, allowNull: false, defaultValue: 0 },
   img: { type: DataTypes.STRING, allowNull: false },
 });
 
@@ -79,6 +79,7 @@ module.exports = {
   User,
   Basket,
   BasketDevice,
+  Device,
   Type,
   Brand,
   Rating,
