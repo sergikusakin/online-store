@@ -2,6 +2,7 @@ const apiError = require("../error/apiError");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User, Basket } = require("../models/models.js");
+const { application } = require("express");
 
 const generateJwt = (id, email, role) => {
   return jwt.sign({ id, email, role }, process.env.SECRET_KEY, {
@@ -31,7 +32,23 @@ class UserController {
     return res.json({ token });
   }
 
-  async login(req, res) {}
+  async login(req, res, next) {
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
+
+    if (!email) {
+      return next(apiError.internal("User is not found"));
+    }
+
+    let comparePassword = bcrypt.compareSync(password, user.password);
+
+    if (!comparePassword) {
+      return next(apiError.internal("Password invalid"));
+    }
+
+    const token = generateJwt(user.id, user.email, user.role);
+    return res.json({ token });
+  }
 
   async check(req, res, next) {
     const { id } = req.query;
