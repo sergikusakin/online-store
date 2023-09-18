@@ -1,6 +1,6 @@
 import React from "react";
 
-const Фгер = () => {
+const Auth = () => {
   return <div>AUTH</div>;
 };
 
