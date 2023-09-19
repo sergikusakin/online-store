@@ -1,7 +1,9 @@
 import React from "react";
 
-function App() {
-  return <div>WORKING</div>;
-}
+import AppRouter from "./components/AppRouter.js";
+
+const App = () => {
+  return <AppRouter />;
+};
 
 export default App;
